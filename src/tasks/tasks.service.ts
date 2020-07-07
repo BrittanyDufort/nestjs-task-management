@@ -8,12 +8,12 @@ import { GetTasksFilterDto } from './dto/get-tasks-filter.dto';
 export class TasksService {
   private tasks: Task[] = [];
 
-  getAllTasks() {
+  getAllTasks(): Task[] {
     return this.tasks;
   }
 
   getTaskById(id: string): Task {
-    const found = this.tasks.find(task => task.id === id);
+    const found = this.tasks.find((task) => task.id === id);
 
     if (!found) {
       throw new NotFoundException(`Task with ID "${id}" not found.`);
@@ -38,7 +38,7 @@ export class TasksService {
 
   deleteTask(id: string): void {
     const found = this.getTaskById(id);
-    this.tasks = this.tasks.filter(task => task.id !== found.id);
+    this.tasks = this.tasks.filter((task) => task.id !== found.id);
   }
 
   updateTaskStatus(id: string, status: TaskStatus): Task {
@@ -52,14 +52,11 @@ export class TasksService {
     let tasks = this.getAllTasks();
 
     if (status) {
-      tasks = tasks.filter(task => task.status === status);
+      tasks = tasks.filter((task) => task.status === status);
     }
 
     if (search) {
-      tasks = tasks.filter(task =>
-        task.title.includes(search) ||
-        task.description.includes(search)
-      );
+      tasks = tasks.filter((task) => task.title.includes(search) || task.description.includes(search));
     }
 
     return tasks;
